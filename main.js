@@ -21,6 +21,8 @@ class Books {
 class UI {
     constructor() {
         this.container = document.querySelector(".container");
+        this.modal = document.querySelector(".modal-body");
+        this.modalTitle = document.getElementById("bookModal");
         this.counter = 0;
     }
 
@@ -37,7 +39,7 @@ class UI {
                                 <li class="list-group-item text-capitalize">Book Title: ${element.title}</li>
                                 <li class="list-group-item">Book Description: ${element.description}</li>
                                 <li class="list-group-item">Book Language: ${element.language}</li>
-                                <button id="${this.counter}" class="btn btn-dark">See More!</button>
+                                <button id="${this.counter}" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalCenter">See More!</button>
                             </ul>
                         </div>
                         <div class="col-6">
@@ -52,9 +54,19 @@ class UI {
         allButtons = document.querySelectorAll(".btn");
 
         allButtons.forEach(element => {
-            console.log(element.id);
+            element.addEventListener("click", () => {
+                const selectedBook = element.id;
+                ui.displayModal(data, selectedBook);
+            })
         })
         console.log(allButtons);
+    }
+
+    displayModal(data, id) {
+        this.modalTitle.innerHTML = data.books[id].title;
+        this.modal.innerHTML = `
+            <img class="img-fluid" src="${data.books[id].cover}" />
+        `;
     }
 }
 
