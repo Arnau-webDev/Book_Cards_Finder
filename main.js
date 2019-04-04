@@ -20,7 +20,7 @@ class Books {
 
 class UI {
     constructor() {
-        this.container = document.querySelector(".container");
+        this.container = document.getElementById("wrapper");
         this.modal = document.querySelector(".modal-body");
         this.modalTitle = document.getElementById("bookModal");
         this.counter = 0;
@@ -32,17 +32,20 @@ class UI {
 
         data.books.forEach((element) => {
             output += `
-                <div class="m-4 text-center">
-                    <div class="row">
-                        <div class="col-6 mt-auto mb-auto">
+                <div class="m-2 text-center cardContainer">
+                    <div class="card">
+                        <div class="back">
                             <ul class="list-group">
-                                <li class="list-group-item text-capitalize">Book Title: ${element.title}</li>
-                                <li class="list-group-item">Book Description: ${element.description}</li>
-                                <li class="list-group-item">Book Language: ${element.language}</li>
-                                <button id="${this.counter}" class="btn btn-dark" data-toggle="modal" data-target="#exampleModalCenter">See More!</button>
+                                <li class="list-group-item text-uppercase font-weight-bold">Book title</li>
+                                <li class="list-group-item text-capitalize">${element.title}</li>
+                                <li class="list-group-item text-uppercase font-weight-bold">Book Description</li>
+                                <li class="list-group-item">${element.description}</li>
+                                <li class="list-group-item text-uppercase font-weight-bold">Book Language</li>
+                                <li class="list-group-item text-capitalize">${element.language}</li>
+                                <button id="${this.counter}" class="btn btn-dark p-2" data-toggle="modal" data-target="#exampleModalCenter">See More!</button>
                             </ul>
                         </div>
-                        <div class="col-6">
+                        <div class="front">
                             <img class="img-fluid" src="${element.detail}"/>
                         </div>
                     </div>
