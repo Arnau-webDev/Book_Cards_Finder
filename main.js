@@ -31,11 +31,10 @@ class UI {
         let output = "";
         console.log(data);
 
-        data.forEach((element) => {
+        data.forEach((element, index) => {
             // console.log(element.hasOwnProperty("position"));
-            if (element.hasOwnProperty("position")) {
-                this.counter = element.position;
-            }
+            element.position = index;
+
             output += `
                 <div class="m-2 text-center cardContainer">
                     <div class="card">
@@ -47,7 +46,7 @@ class UI {
                                 <li class="list-group-item">${element.description}</li>
                                 <li class="list-group-item text-uppercase font-weight-bold">Book Language</li>
                                 <li class="list-group-item text-capitalize">${element.language}</li>
-                                <button id="${this.counter}" class="btn btn-dark p-2" data-toggle="modal" data-target="#exampleModalCenter">See More!</button>
+                                <button id="${element.position}" class="btn btn-dark p-2" data-toggle="modal" data-target="#exampleModalCenter">See More!</button>
                             </ul>
                         </div>
                         <div class="front">
@@ -79,9 +78,9 @@ class UI {
 
     filterBooksBySearch(data, value) {
         let filteredArray = [];
-        data.forEach((element, index) => {
+        data.forEach((element) => {
             if (element.title.toLowerCase().includes(value.toLowerCase())) {
-                element.position = index;
+                // element.position = index;
                 filteredArray.push(element);
                 console.log(element.position);
             }
