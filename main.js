@@ -21,6 +21,7 @@ class Books {
 class UI {
     constructor() {
         this.container = document.getElementById("wrapper");
+        this.search = document.querySelector(".myBtn");
         this.modal = document.querySelector(".modal-body");
         this.modalTitle = document.getElementById("bookModal");
         this.counter = 0;
@@ -28,13 +29,17 @@ class UI {
 
     displayBooks(data) {
         let output = "";
-        console.log(data.books);
+        console.log(data);
 
-        data.books.forEach((element) => {
+        data.forEach((element) => {
+            // console.log(element.hasOwnProperty("position"));
+            if (element.hasOwnProperty("position")) {
+                this.counter = element.position;
+            }
             output += `
                 <div class="m-2 text-center cardContainer">
                     <div class="card">
-                        <div class="back">
+                        <div class="back mt-auto mb-auto">
                             <ul class="list-group">
                                 <li class="list-group-item text-uppercase font-weight-bold">Book title</li>
                                 <li class="list-group-item text-capitalize">${element.title}</li>
@@ -62,14 +67,32 @@ class UI {
                 ui.displayModal(data, selectedBook);
             })
         })
-        console.log(allButtons);
+        // console.log(allButtons);
     }
 
     displayModal(data, id) {
-        this.modalTitle.innerHTML = data.books[id].title;
+        this.modalTitle.innerHTML = data[id].title;
         this.modal.innerHTML = `
-            <img class="img-fluid" src="${data.books[id].cover}" />
+            <img class="img-fluid" src="${data[id].cover}"/>
         `;
+    }
+
+    filterBooksBySearch(data, value) {
+        let filteredArray = [];
+        data.forEach((element, index) => {
+            if (element.title.toLowerCase().includes(value.toLowerCase())) {
+                element.position = index;
+                filteredArray.push(element);
+                console.log(element.position);
+            }
+        })
+        console.log(filteredArray);
+        if (!filteredArray == []) {
+            ui.displayBooks(filteredArray);
+        } else {
+            ui.displayBooks(data);
+        }
+        filteredArray = [];
     }
 }
 
@@ -78,13 +101,18 @@ class UI {
 
 const books = new Books();
 const ui = new UI();
+const input = document.querySelector(".myInput");
 
 books.getBooks()
     .then((books) => {
         console.log(books);
-        ui.displayBooks(books);
+        ui.displayBooks(books.books);
+
+        // Search
+        input.addEventListener("input", (e) => {
+            let filterBy = e.target.value;
+            ui.filterBooksBySearch(books.books, filterBy);
+        })
     })
     .catch(err => console.log(err));
 
-
-// Modal
