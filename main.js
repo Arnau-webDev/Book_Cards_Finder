@@ -29,7 +29,7 @@ class UI {
 
     displayBooks(data) {
         let output = "";
-        console.log(data);
+        // console.log(data);
 
         data.forEach((element, index) => {
             // console.log(element.hasOwnProperty("position"));
@@ -80,18 +80,20 @@ class UI {
         let filteredArray = [];
         data.forEach((element) => {
             if (element.title.toLowerCase().includes(value.toLowerCase())) {
-                // element.position = index;
                 filteredArray.push(element);
-                console.log(element.position);
+                // console.log(element.position);
             }
         })
-        console.log(filteredArray);
+        // console.log(filteredArray);
         if (!filteredArray == []) {
             ui.displayBooks(filteredArray);
         } else {
             ui.displayBooks(data);
         }
         filteredArray = [];
+        if (this.container.childNodes.length === 0) {
+            this.container.innerHTML = `<div>${value.toUpperCase()} Does not match any Books!</div>`;
+        };
     }
 }
 
@@ -104,7 +106,7 @@ const input = document.querySelector(".myInput");
 
 books.getBooks()
     .then((books) => {
-        console.log(books);
+        // console.log(books);
         ui.displayBooks(books.books);
 
         // Search
