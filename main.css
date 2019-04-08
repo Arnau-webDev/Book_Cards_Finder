@@ -2,7 +2,7 @@ body {
     background: #eee;
 }
 
-#wrapper {
+#wrapper, body {
     max-width: 1300px;
     margin: auto;
 }
